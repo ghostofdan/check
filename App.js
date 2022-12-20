@@ -7,6 +7,7 @@ import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailsScreen';
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import FavoritesScreen from './screens/FavoritesScreen';
+import { Ionicons } from '@expo/vector-icons'
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -18,10 +19,31 @@ function DrawerNavigator() {
       screenOptions={{
           headerStyle: { backgroundColor: '#351401'},
           headerTintColor: 'white',
-          sceneContainerStyle: { backgroundColor: '#3f2f25'}
+          sceneContainerStyle: { backgroundColor: '#3f2f25'},
+          drawerContentStyle: { backgroundColor: '#352401' },
+          drawerActiveTintColor: '#352401',
+          drawerInactiveTintColor: 'white',
+          drawerActiveBackgroundColor: '#e4baa1'
+
       }}>
-      <Drawer.Screen name='Categories' component={CategoriesScreen}/>
-      <Drawer.Screen name='Favorites' component={FavoritesScreen}/>
+      <Drawer.Screen 
+        name='Categories' 
+        component={CategoriesScreen} 
+        options={{
+          title: 'All Categories',
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name='list'  color={color} size={size}/>
+            )
+        }}/>
+      <Drawer.Screen 
+        name='Favorites' 
+        component={FavoritesScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name='star'  color={color} size={size}/>
+            )
+        }}/>
+
     </Drawer.Navigator>
   )
 }
@@ -49,13 +71,15 @@ export default function App() {
           <Stack.Screen 
           name='MealDetail' 
           component={MealDetailScreen} 
-          options={{headerRight: () => {
-            return (
-              <Button 
-                title='Tap Me'
-              />
-            )
-          }}}
+          options={{
+            headerRight: () => {
+              return (
+                <Button 
+                  title='Tap Me'
+                />
+              )
+            }, title: 'About the Meals'
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
